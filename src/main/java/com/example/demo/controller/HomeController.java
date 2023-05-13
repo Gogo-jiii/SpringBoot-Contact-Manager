@@ -17,10 +17,16 @@ public class HomeController {
 		model.addAttribute("title", "Home page");
 		return "home.html";
 	}
-	
+
 	@RequestMapping("/about")
 	public String about(Model model) {
 		model.addAttribute("title", "About page");
 		return "about.html";
+	}
+	
+	@RequestMapping("/signup")
+	public String signup(Model model) {
+		model.addAttribute("title", "Registration page");
+		return "signup.html";
 	}
 }

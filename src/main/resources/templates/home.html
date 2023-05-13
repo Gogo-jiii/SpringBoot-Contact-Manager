@@ -1,14 +1,20 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::section})">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="base::layout(~{::section})">
 
 <head>
-	<title>Page Title</title>
+<title>Page Title</title>
 </head>
 
 <body>
 
-	<section>
-		<h1>THIS IS HOME PAGE.</h1>
+	<section
+		class="banner d-flex justify-content-center align-items-center">
+		<div class="text-center">
+			<h1 class = font-weight-bold>Smart Contact Manager</h1>
+			<p>Lorem ipsum.........</p>
+			<button class = "btn btn-primary btn-large">Get Started</button>
+		</div>
 	</section>
 
 </body>
