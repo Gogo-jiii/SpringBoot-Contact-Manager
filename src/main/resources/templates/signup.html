@@ -9,7 +9,51 @@
 <body>
 
 	<section>
-		<p>Sign up</p>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 offset-md-2">
+					<div class="my-card mt-3">
+
+						<div class="container text-center">
+							<img src="" th:src="@{/images/register_icon.png}"
+								style="width: 100px;" />
+						</div>
+
+						<h1 class="text-center">Register Here!!!</h1>
+
+						<form action="" th:action="@{/do_register}" method="post">
+							<div class="form-group">
+								<label for="name_field">Your Name:</label> <input type="text"
+									class="form-control" id="name_field"
+									placeholder="Enter here..." required="required" />
+							</div>
+
+							<div class="form-group">
+								<label for="email_field">Your Email:</label> <input type="email"
+									class="form-control" id="email_field"
+									placeholder="Enter here..." required="required" />
+							</div>
+
+							<div class="form-group">
+								<label for="password_field">Your Password:</label> <input
+									type="password" class="form-control" id="password_field"
+									placeholder="Enter here..." required="required" />
+							</div>
+
+							<div class="form-group">
+								<textarea placeholder="Enter something about yourself..."
+									rows="6" cols="50" class="form-group"></textarea>
+							</div>
+
+							<div class="container">
+								<button class="btn btn-primary" type="submit">Submit</button>
+								<button class="btn btn-warning text-white" type="reset">Reset</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
 	</section>
 
 </body>
