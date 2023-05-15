@@ -14,6 +14,13 @@
 				<div class="col-md-8 offset-md-2">
 					<div class="my-card mt-3">
 
+						<div th:if="${session.message}"
+							th:classappend="${session.message.type}"
+							class="alert alert-primary" role="alert">
+							<p th:text="${session.message.content}"></p>
+<!-- 							<th:block th:text="${#session.removeAttribute('message')}"></th:block> -->
+						</div>
+
 						<div class="container text-center">
 							<img src="" th:src="@{/images/register_icon.png}"
 								style="width: 100px;" />
@@ -21,28 +28,38 @@
 
 						<h1 class="text-center">Register Here!!!</h1>
 
-						<form action="" th:action="@{/do_register}" method="post">
+						<form action="" th:action="@{/do_register}" method="post"
+							th:object="${user}">
 							<div class="form-group">
 								<label for="name_field">Your Name:</label> <input type="text"
 									class="form-control" id="name_field"
-									placeholder="Enter here..." required="required" />
+									placeholder="Enter here..." required="required"
+									th:value="${user.name}" name="name" />
 							</div>
 
 							<div class="form-group">
 								<label for="email_field">Your Email:</label> <input type="email"
 									class="form-control" id="email_field"
-									placeholder="Enter here..." required="required" />
+									placeholder="Enter here..." required="required"
+									th:value="${user.email}" name="email" />
 							</div>
 
 							<div class="form-group">
 								<label for="password_field">Your Password:</label> <input
 									type="password" class="form-control" id="password_field"
-									placeholder="Enter here..." required="required" />
+									placeholder="Enter here..." required="required" name="password" />
 							</div>
 
 							<div class="form-group">
 								<textarea placeholder="Enter something about yourself..."
-									rows="6" cols="50" class="form-group"></textarea>
+									rows="6" cols="50" class="form-group" th:value="${user.about}"
+									name="about"></textarea>
+							</div>
+
+							<div class="form-group form-check">
+								<input type="checkbox" name="agreement" class="form-check-input"
+									id="agreement" /> <label for="agreement">Accept terms
+									and conditions.</label>
 							</div>
 
 							<div class="container">
