@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,6 +15,7 @@ import com.example.demo.models.Message;
 import com.example.demo.models.User;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @Controller
 public class HomeController {
@@ -41,18 +43,22 @@ public class HomeController {
 	}
 	
 	@PostMapping("/do_register")
-	public String registerUser(@ModelAttribute("user") User user, @RequestParam(value = "agreement", defaultValue = "false") boolean agreement, Model model, HttpSession session) {
+	public String registerUser(@Valid @ModelAttribute("user") User user, BindingResult result,@RequestParam(value = "agreement", defaultValue = "false") boolean agreement, Model model, HttpSession session) {
 		try {
-			if(!agreement) {
-				System.out.println("Please agree the Term and conditions!");
-				throw new Exception(" Please agree the Term and conditions!");
+			
+			if(result.hasErrors()) {
+				System.out.println("Error: " + result.toString());
+				model.addAttribute("user", user);
+				return "signup.html";
 			}
+			
 			System.out.println("Agreement: " + agreement);
 			System.out.println("User: " + user);
 			
 			user.setEnabled(true);
 			user.setImageUrl("default");
 			user.setRole("user");
+			user.setAgreement(agreement);
 			
 			repo.save(user);
 			
@@ -61,8 +67,6 @@ public class HomeController {
 			
 		}catch(Exception e) {
 			e.printStackTrace();
-			model.addAttribute("user", user);
-			session.setAttribute("message", new Message("Something went wrong!"+e.getMessage(), "alert-warning"));
 		}
 		
 		return "signup.html";

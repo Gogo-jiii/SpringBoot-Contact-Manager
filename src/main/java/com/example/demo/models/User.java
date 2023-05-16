@@ -3,6 +3,9 @@ package com.example.demo.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.validator.constraints.Length;
+import org.springframework.data.annotation.Transient;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,24 +14,43 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "user")
 public class User {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
+	
+	@NotBlank(message = "Field can not be empty.")
+	@Length(min = 2, max = 10, message = "Name should be at least 2 and maximum 10 characters long.")
 	private String name;
+	
 	@Column(unique = true)
+	@NotBlank(message = "Field can not be empty.")
+	@Email(regexp= "^(.+)@(\\S+)$", message = "Invalid email id.")
 	private String email;
+	
+	@NotBlank(message = "Field can not be empty.")
 	private String password;
+	
 	private String role;
 	private boolean enabled;
 	private String imageUrl;
+	
 	@Column(length = 100)
+	@Length(max = 100, message = "Max 100 characters allowed.")
 	private String about;
 
+	@Transient
+	@AssertTrue(message = "Please agree the terms and conditions.")
+	private boolean agreement = false;
+	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private List<Contact> contacts = new ArrayList<>();
 
@@ -104,11 +126,20 @@ public class User {
 		this.contacts = contacts;
 	}
 
+	public boolean isAgreement() {
+		return agreement;
+	}
+
+	public void setAgreement(boolean agreement) {
+		this.agreement = agreement;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", role=" + role
-				+ ", enabled=" + enabled + ", imageUrl=" + imageUrl + ", about=" + about + ", contacts=" + contacts
-				+ "]";
+				+ ", enabled=" + enabled + ", imageUrl=" + imageUrl + ", about=" + about + ", agreement=" + agreement
+				+ ", contacts=" + contacts + "]";
 	}
+
 
 }
