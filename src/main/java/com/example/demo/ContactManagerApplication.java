@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 import com.example.demo.dao.UserRepo;
 
-@SpringBootApplication(scanBasePackages = {"com.example.demo", "com.example.dao", "com.example.controller", "com.example.models"} )
+@SpringBootApplication(scanBasePackages = {"com.example.demo", "com.example.dao", "com.example.controller", "com.example.models", "com.example.config"} )
 public class ContactManagerApplication {
 
 	public static void main(String[] args) {
